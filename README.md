@@ -1,23 +1,17 @@
-##
-[![Hexlet Ltd. logo](https://raw.githubusercontent.com/Hexlet/hexletguides.github.io/master/images/hexlet_logo128.png)](https://ru.hexlet.io/pages/about?utm_source=github&utm_medium=link&utm_campaign=nodejs-package)
+### convert.js
 
-This repository is created and maintained by the team and the community of Hexlet, an educational project. [Read more about Hexlet (in Russian)](https://ru.hexlet.io/pages/about?utm_source=github&utm_medium=link&utm_campaign=nodejs-package).
-##
+Реализуйте и экспортируйте по умолчанию функцию, которая принимает на вход массив определенной структуры, и возвращающей объект полученный из этого массива.
 
-# nodejs-package
+Массив устроен таким образом, что с помощью него можно представлять ассоциативные массивы. Каждое значение внутри него это массив из двух элементов, где первый элемент - ключ, а второй значение. В свою очередь если значение массив, то считается что это вложенное представление ассоциативного массива. Другими словами любой массив внутри исходного массива всегда рассматривается как данные которые нужно конвертировать в объект.
 
-[![Code Climate](https://codeclimate.com/github/hexlet-boilerplates/javascript-package/badges/gpa.svg)](https://codeclimate.com/github/hexlet-boilerplates/javascript-package)
-[![Issue Count](https://codeclimate.com/github/hexlet-boilerplates/javascript-package/badges/issue_count.svg)](https://codeclimate.com/github/hexlet-boilerplates/javascript-package)
-[![Build Status](https://travis-ci.org/hexlet-boilerplates/nodejs-package.svg?branch=master)](https://travis-ci.org/hexlet-boilerplates/nodejs-package)
-
-## Setup
-
-```sh
-$ make install
 ```
+convert([]); // => {}
+convert([['key', 'value']]); // { key: 'value' }
+convert([['key', 'value'], ['key2', 'value2']]); // { key: 'value', key2: 'value2' }
 
-## Run tests
-
-```sh
-$ make test
+convert([
+  ['key', [['key2', 'anotherValue']]],
+  ['key2', 'value2']
+]);
+// { key: { key2: 'anotherValue' }, key2: 'value2' }
 ```
