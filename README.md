@@ -1,23 +1,32 @@
-##
-[![Hexlet Ltd. logo](https://raw.githubusercontent.com/Hexlet/hexletguides.github.io/master/images/hexlet_logo128.png)](https://ru.hexlet.io/pages/about?utm_source=github&utm_medium=link&utm_campaign=nodejs-package)
+### findFilesByName.js
 
-This repository is created and maintained by the team and the community of Hexlet, an educational project. [Read more about Hexlet (in Russian)](https://ru.hexlet.io/pages/about?utm_source=github&utm_medium=link&utm_campaign=nodejs-package).
-##
+Реализуйте и экспортируйте по умолчанию функцию, которая принимает на вход файловое дерево и подстроку, а возвращает список файлов, имена которых содержат эту подстроку.
 
-# nodejs-package
+```
+const tree = mkdir('/', [
+  mkdir('etc', [
+    mkdir('apache'),
+    mkdir('nginx', [
+      mkfile('nginx.conf', { size: 800 }),
+    ]),
+    mkdir('consul', [
+      mkfile('config.json', { size: 1200 }),
+      mkfile('data', { size: 8200 }),
+      mkfile('raft', { size: 80 }),
+    ]),
+  ]),
+  mkfile('hosts', { size: 3500 }),
+  mkfile('resolve', { size: 1000 }),
+]);
 
-[![Code Climate](https://codeclimate.com/github/hexlet-boilerplates/javascript-package/badges/gpa.svg)](https://codeclimate.com/github/hexlet-boilerplates/javascript-package)
-[![Issue Count](https://codeclimate.com/github/hexlet-boilerplates/javascript-package/badges/issue_count.svg)](https://codeclimate.com/github/hexlet-boilerplates/javascript-package)
-[![Build Status](https://travis-ci.org/hexlet-boilerplates/nodejs-package.svg?branch=master)](https://travis-ci.org/hexlet-boilerplates/nodejs-package)
+findFilesByName(tree, 'co');
+// => ['/etc/nginx/nginx.conf', '/etc/consul/config.json']
 
-## Setup
-
-```sh
-$ make install
 ```
 
-## Run tests
+Обратите внимание на то, что возвращается не просто имя файла, а полный путь до файла, начиная от корня.
 
-```sh
-$ make test
-```
+### Подсказки
+
+-   Для построения путей используйте функцию [path.join](https://nodejs.org/api/path.html#path_path_join_paths).
+-   Проверку вхождения строк можно делать с помощью функции `str.includes(substr)`.
