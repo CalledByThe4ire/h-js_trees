@@ -1,23 +1,53 @@
-##
-[![Hexlet Ltd. logo](https://raw.githubusercontent.com/Hexlet/hexletguides.github.io/master/images/hexlet_logo128.png)](https://ru.hexlet.io/pages/about?utm_source=github&utm_medium=link&utm_campaign=nodejs-package)
+Во многих операционных системах (Linux, MacOS) существует утилита `du`. Она умеет считать место в указанных файлах и директориях. Например так:
 
-This repository is created and maintained by the team and the community of Hexlet, an educational project. [Read more about Hexlet (in Russian)](https://ru.hexlet.io/pages/about?utm_source=github&utm_medium=link&utm_campaign=nodejs-package).
-##
+```
+ tmp$ du -sh *
+  0B    com.docker.vmnetd.socket
+ 10M    credo
+4.0K    debug.mjs
+  0B    filesystemui.socket
+4.0K    index.php
+ 37M    node_modules
+ 88K    package-lock.json
+ 22M    taxdome
 
-# nodejs-package
-
-[![Code Climate](https://codeclimate.com/github/hexlet-boilerplates/javascript-package/badges/gpa.svg)](https://codeclimate.com/github/hexlet-boilerplates/javascript-package)
-[![Issue Count](https://codeclimate.com/github/hexlet-boilerplates/javascript-package/badges/issue_count.svg)](https://codeclimate.com/github/hexlet-boilerplates/javascript-package)
-[![Build Status](https://travis-ci.org/hexlet-boilerplates/nodejs-package.svg?branch=master)](https://travis-ci.org/hexlet-boilerplates/nodejs-package)
-
-## Setup
-
-```sh
-$ make install
 ```
 
-## Run tests
+*Перед тем как делать упражнение, обязательно попробуйте поиграйте с этой утилитой в терминале, посмотрите ее опции через `man du`.*
 
-```sh
-$ make test
+### du.js
+
+Реализуйте и экспортируйте по умолчанию функцию, которая принимает на вход директорию, а возвращает список узлов вложенных (директорий и файлов) в указанную директорию на один уровень и место которое они занимают. Размер файла задается в метаданных. Размер директории складывается из сумм всех размеров файлов находящихся внутри во всех подпапках. Сами папки размера не имеют.
+
+-   Обратите внимание на структуру результирующего массива. Каждый элемент - массив с двумя значениями, именем директории и размером файлов внутри.
+-   Результат отсортирован по размеру в обратном порядке. То есть сверху самые тяжелые, внизу самые легкие
+
 ```
+const tree = mkdir('/', [
+  mkdir('etc', [
+    mkdir('apache'),
+    mkdir('nginx', [
+      mkfile('nginx.conf', { size: 800 }),
+    ]),
+    mkdir('consul', [
+      mkfile('config.json', { size: 1200 }),
+      mkfile('data', { size: 8200 }),
+      mkfile('raft', { size: 80 }),
+    ]),
+  ]),
+  mkfile('hosts', { size: 3500 }),
+  mkfile('resolve', { size: 1000 }),
+]);
+
+du(tree);
+// [
+//   ['etc', 10280],
+//   ['hosts', 3500],
+//   ['resolve', 1000],
+// ]
+
+```
+
+### Подсказки
+
+-   [sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)
