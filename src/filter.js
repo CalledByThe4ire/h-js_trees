@@ -19,12 +19,8 @@ const filter = (f: Node => boolean, node: Node) => {
     return null;
   }
 
-  return node.type === 'directory'
-    ? {
-        ...node,
-        children: (node.children || []).map(n => filter(f, n)).filter(v => v),
-      }
-    : node;
+  const children = node.children.map(n => filter(f, n)).filter(v => v);
+  return { ...node, children };
 };
 
 export default filter;
