@@ -18,40 +18,20 @@ type Directory = BaseNode & {
 type Node = File | Directory;
 
 // BEGIN (write your solution here)
-const calculateFilesSize = (tree: Node): number =>
-  reduce(
-    (acc: number, node: Node) =>
-      node.type === 'file' ? acc + node.meta.size : acc,
-    tree,
-    0,
-  );
+const calculatefilesSize = (node: Node) => reduce((acc: number, n: Node): number => {
+  if (n.type === 'directory') {
+    return acc;
+  }
 
-const compareNumbers = (a: number, b: number): number => b - a;
+  return acc + n.meta.size;
+}, node, 0);
 
-export default (tree: Node): Array<[string, number]> => {
-  const { children }: { children: Node } = tree;
-  const mapped: Array<[string, number]> = children.map((n: Node) => [
-    n.name,
-    calculateFilesSize(n),
-  ]);
-  const sorted: Array<number> = mapped
-    .map((item: Array<string, number>) =>
-      item.filter((element: string | number) => typeof element === 'number'),
-    )
-    .reduce(
-      (acc: Array<number>, item: Array<[number]>) => [...acc, ...item],
-      [],
-    )
-    .sort(compareNumbers);
-  return sorted.reduce((acc: Array<[string, number]>, item: number) => {
-    const [value]: number = sorted.filter((element: number) => element === item);
-    const [entry]: Array<string, number> = mapped.filter(
-      (element: Array<string, number>) => {
-        const [, num] = element;
-        return num === value;
-      },
-    );
-    return [...acc, entry];
-  }, []);
+const du = (node: Node) => {
+  const result: Array<[string, number]> = node.children.map(n => [n.name, calculatefilesSize(n)]);
+  // Обычный дестракчеринг. JS позволяет пропускать имена если они не используются
+  result.sort(([, size1], [, size2]) => size2 - size1);
+  return result;
 };
+
+export default du;
 // END
