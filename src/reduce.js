@@ -20,7 +20,7 @@ const reduce = <T>(f: (T, Node) => T, node: Node, acc: T): T => {
   if (node.type === 'file') {
     return newAcc;
   }
-  return (node.children || []).reduce((iAcc, n) => reduce(f, n, iAcc), newAcc);
+  return node.children.reduce((iAcc, n) => reduce(f, n, iAcc), newAcc);
 };
 
 export default reduce;
