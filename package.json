@@ -31,7 +31,8 @@
   },
   "homepage": "https://github.com/hexlet-boilerplates/nodejs-package#readme",
   "dependencies": {
-    "gulp": "^4.0.0"
+    "gulp": "^4.0.0",
+    "hexlet-immutable-fs-trees": "*"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

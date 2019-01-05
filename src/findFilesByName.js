@@ -15,26 +15,17 @@ type Directory = BaseNode & {
 type Node = File | Directory;
 
 // BEGIN (write your solution here)
-export default (root: Node, substr: string): Array<string> => {
-  const iter = (
-    tree: Node,
-    combination: string,
-    segmentsList: string,
-    acc: Array<string>,
-  ): Array<String> => {
-    if (tree.children) {
-      return tree.children.reduce(
-        (cAcc: Array<string>, child: Array<Node>) =>
-          iter(child, combination, path.join(segmentsList, child.name), cAcc),
-        acc,
-      );
+const findFilesByName = (root: Node, substr: string): Array<string | null> => {
+  const iter = (n: Node, ancestry: string, acc: Array<string | null>) => {
+    const newAncestry: string = path.join(ancestry, n.name);
+    if (n.type === 'file') {
+      return n.name.includes(substr) ? [...acc, newAncestry] : acc;
     }
-
-    if (tree.type === 'file' && tree.name.includes(combination)) {
-      return [...acc, path.join(segmentsList)];
-    }
-    return acc;
+    return n.children.reduce((cAcc, nn) => iter(nn, newAncestry, cAcc), acc);
   };
-  return iter(root, substr, root.name, []);
+
+  return iter(root, '', []);
 };
+
+export default findFilesByName;
 // END
