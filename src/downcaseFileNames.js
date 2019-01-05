@@ -14,17 +14,11 @@ type Directory = BaseNode & {
 
 type Node = File | Directory;
 
-const downcaseFileNames = (tree: Node): Node => {
-  // if (!Object.keys(tree).length) return null;
-  if (tree.type === 'directory') {
-    const { children }: { children: Array<Node> } = tree;
-    const subTree: Directory = { ...tree, children: children.map(downcaseFileNames) };
-    return subTree;
+const downcaseFileNames = (node: Node): Node => {
+  if (node.type === 'directory') {
+    return { ...node, children: node.children.map(downcaseFileNames) };
   }
-
-  const { name } = tree;
-  const subTree: File = { ...tree, name: name.toLowerCase() };
-  return subTree;
+  return { ...node, name: node.name.toLowerCase() };
 };
 
 export default downcaseFileNames;
