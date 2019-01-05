@@ -1,12 +1,12 @@
 // @flow
 type BaseNode = { name: string, meta: {} };
 type File = BaseNode & {
-  type: "file"
+  type: 'file'
 };
 
 /* eslint-disable no-use-before-define */
 type Directory = BaseNode & {
-  type: "directory",
+  type: 'directory',
   children: Array<Node>
 };
 /* eslint-enable no-use-before-define */
@@ -18,7 +18,7 @@ const map = (f: Node => any, node: Node) => {
   const updatedNode = f(node);
 
   return node.type === 'directory'
-    ? { ...updatedNode, children: (node.children || []).map(n => map(f, n)) }
+    ? { ...updatedNode, children: node.children.map(n => map(f, n)) }
     : updatedNode;
 };
 
